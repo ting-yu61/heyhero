@@ -90,14 +90,17 @@ def main():
     pduan=['增加','减少','乘','除']
     while k==1:
         s=input()
-        if s=='退出':
-            break
+        if len(fenge(s))==1:
+            if s=='退出':
+                break
+            else:
+                print('(语句输入格式错误！)')
         else:
-            if fenge(s)[0]=='整数' and fenge(s)[2]=='等于': #整数 （变量名） 等于 （数字）
-                if pand(fenge(s)[3])=='True':
-                    an[fenge(s)[1]]=hantoshuzi(fenge(s)[3])
-                else:
-                    print('("%s",未能判断该数字!)' %fenge(s)[3])
+            if len(fenge(s))==4 and fenge(s)[0]=='整数' and fenge(s)[2]=='等于': #整数 （变量名） 等于 （数字）
+                    if pand(fenge(s)[3])=='True':
+                        an[fenge(s)[1]]=hantoshuzi(fenge(s)[3])
+                    else:
+                        print('("%s",未能判断该数字!)' %fenge(s)[3])
             elif fenge(s)[1] in pduan:             #例：（变量名） 增加 （数字）
                 if an.__contains__(fenge(s)[0])==True:
                     ss=fenge(s)[1]
@@ -121,67 +124,71 @@ def main():
                 elif an.__contains__(fenge(s)[1])==False:
                         print('(没有%s！)' %fenge(s)[1])
             elif fenge(s)[0]=='如果':   #如果 （判断语句） 则 （操作语句1） 否则 （操作语句2）
-                ts=re.match('如果 (.*?) 则 (.*?) 否则 (.*)',s,re.S)
-                m=ts.group(1)    #（判断语句）
-                n=ts.group(2)    #（操作语句1）
-                r=ts.group(3)    #（操作语句2）
-                if an.__contains__(fenge(m)[0])==True:
-                    x=an[fenge(m)[0]]
-                    if pand(fenge(m)[2])=='True':
-                        y=hantoshuzi(fenge(m)[2])
-                    else:
-                        print('("%s",未能判断该数字!)' %fenge(m)[2])
-                    if bijiao(fenge(m)[1],x,y)==1:
-                        if fenge(n)[0]=='看看':
-                            s1=fenge(n)[1]
-                            if s1[0]=='“' and s1[len(s1)-1]=='”':
-                                str=s1.strip('“”')
-                            if an.__contains__(fenge(n)[1])==True: 
-                                str='(刚刚执行了“'+r+'”操作)'
-                                if an[fenge(n)[1]]>=0:
-                                    str=fenge(n)[1]+':'+shuzitohan(an[fenge(n)[1]])
-                                else:
-                                    str=fenge(n)[1]+':'+'负'+shuzitohan(an[fenge(n)[1]])
-                            elif an.__contains__(fenge(n)[1])==False:
-                                str='(没有'+fenge(n)[1]+'！)'
-                        elif n=='无':
-                            str='(没有任何操作)'
+                if len(fenge(s))>=8:
+                    ts=re.match('如果 (.*?) 则 (.*?) 否则 (.*)',s,re.S)
+                    m=ts.group(1)    #（判断语句）
+                    n=ts.group(2)    #（操作语句1）
+                    r=ts.group(3)    #（操作语句2）
+                    if an.__contains__(fenge(m)[0])==True:
+                        x=an[fenge(m)[0]]
+                        if pand(fenge(m)[2])=='True':
+                            y=hantoshuzi(fenge(m)[2])
                         else:
-                            if an.__contains__(fenge(n)[0])==True:
-                                if pand(fenge(n)[2])=='True':
-                                    t=hantoshuzi(fenge(n)[2])
-                                else:
-                                    print('("%s",未能判断该数字!)' %fenge(n)[2])
-                                x=an[fenge(n)[0]]
-                                an[fenge(n)[0]]=yunsuan(fenge(n)[1],x,t)
-                                str='(刚刚执行了“'+n+'”操作)'
-                    else:
-                        if fenge(r)[0]=='看看':
-                            s1=fenge(r)[1]
-                            if s1[0]=='“' and s1[len(s1)-1]=='”':
-                                str=s1.strip('“”')
-                            elif an.__contains__(fenge(r)[1])==True: 
-                                str='(刚刚执行了“'+r+'”操作)'
-                                if an[fenge(r)[1]]>=0:
-                                    str=fenge(r)[1]+':'+shuzitohan(an[fenge(r)[1]])
-                                else:
-                                    str=fenge(r)[1]+':'+'负'+shuzitohan(an[fenge(r)[1]])
-                            elif an.__contains__(fenge(r)[1])==False:
-                                str='(没有'+fenge(r)[1]+'！)'
-                        elif r=='无':
-                            str='(没有任何操作)'
+                            print('("%s",未能判断该数字!)' %fenge(m)[2])
+                        if bijiao(fenge(m)[1],x,y)==1:
+                            if fenge(n)[0]=='看看':
+                                s1=fenge(n)[1]
+                                if s1[0]=='“' and s1[len(s1)-1]=='”':
+                                    str=s1.strip('“”')
+                                if an.__contains__(fenge(n)[1])==True: 
+                                    str='(刚刚执行了“'+r+'”操作)'
+                                    if an[fenge(n)[1]]>=0:
+                                        str=fenge(n)[1]+':'+shuzitohan(an[fenge(n)[1]])
+                                    else:
+                                        str=fenge(n)[1]+':'+'负'+shuzitohan(an[fenge(n)[1]])
+                                elif an.__contains__(fenge(n)[1])==False:
+                                    str='(没有'+fenge(n)[1]+'！)'
+                            elif n=='无':
+                                str='(没有任何操作)'
+                            else:
+                                if an.__contains__(fenge(n)[0])==True:
+                                    if pand(fenge(n)[2])=='True':
+                                        t=hantoshuzi(fenge(n)[2])
+                                    else:
+                                        print('("%s",未能判断该数字!)' %fenge(n)[2])
+                                    x=an[fenge(n)[0]]
+                                    an[fenge(n)[0]]=yunsuan(fenge(n)[1],x,t)
+                                    str='(刚刚执行了“'+n+'”操作)'
                         else:
-                            if an.__contains__(fenge(r)[0])==True:
-                                if pand(fenge(r)[2])=='True':
-                                    t=hantoshuzi(fenge(r)[2])
-                                else:
-                                    print('("%s",未能判断该数字!)' %fenge(r)[2])
-                                x=an[fenge(r)[0]]
-                                an[fenge(r)[0]]=yunsuan(fenge(r)[1],x,t)
-                                str='(刚刚执行了“'+r+'”操作)'
-                    print(str)
-                elif an.__contains__(fenge(m)[0])==False:
-                    print('(没有%s！)' %fenge(m)[0])
+                            if fenge(r)[0]=='看看':
+                                s1=fenge(r)[1]
+                                if s1[0]=='“' and s1[len(s1)-1]=='”':
+                                    str=s1.strip('“”')
+                                elif an.__contains__(fenge(r)[1])==True: 
+                                    str='(刚刚执行了“'+r+'”操作)'
+                                    if an[fenge(r)[1]]>=0:
+                                        str=fenge(r)[1]+':'+shuzitohan(an[fenge(r)[1]])
+                                    else:
+                                        str=fenge(r)[1]+':'+'负'+shuzitohan(an[fenge(r)[1]])
+                                elif an.__contains__(fenge(r)[1])==False:
+                                    str='(没有'+fenge(r)[1]+'！)'
+                            elif r=='无':
+                                str='(没有任何操作)'
+                            else:
+                                if an.__contains__(fenge(r)[0])==True:
+                                    if pand(fenge(r)[2])=='True':
+                                        t=hantoshuzi(fenge(r)[2])
+                                    else:
+                                        print('("%s",未能判断该数字!)' %fenge(r)[2])
+                                    x=an[fenge(r)[0]]
+                                    an[fenge(r)[0]]=yunsuan(fenge(r)[1],x,t)
+                                    str='(刚刚执行了“'+r+'”操作)'
+                    elif an.__contains__(fenge(m)[0])==False:
+                        str='(没有'+fenge(m)[0]+'！)'
+                else:
+                    str='(语句输入格式错误！)'
+                print(str)
+
             else:
                 print('(语句输入格式错误！)')
         
