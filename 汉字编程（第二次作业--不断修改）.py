@@ -35,7 +35,7 @@ def hantoshuzi(x):  #汉字转为数字
     return a  
 def shuzitohan(x):  #数字转为汉字
     if x>100 or x<-100:
-        str='(未能判断该数字!)'
+        str='("'+x+'",未能判断该数字!)'
     elif x<0 and x>=-100:
         x*=(-1)
     elif x<=10:           #例：1 —> 一
@@ -97,7 +97,7 @@ def main():
                 if pand(fenge(s)[3])=='True':
                     an[fenge(s)[1]]=hantoshuzi(fenge(s)[3])
                 else:
-                    print('(未能判断该数字!)')
+                    print('("%s",未能判断该数字!)' %fenge(s)[3])
             elif fenge(s)[1] in pduan:             #例：（变量名） 增加 （数字）
                 if an.__contains__(fenge(s)[0])==True:
                     ss=fenge(s)[1]
@@ -105,12 +105,15 @@ def main():
                     if pand(fenge(s)[2])=='True':
                         y=hantoshuzi(fenge(s)[2])
                     else:
-                        print('(未能判断该数字!)')
+                        print('("%s",未能判断该数字!)' %fenge(s)[2])
                     an[fenge(s)[0]]=yunsuan(ss,x,y)
                 else:
                     print('(没有%s！)' %fenge(s)[0])
             elif fenge(s)[0]=='看看':
-                if an.__contains__(fenge(s)[1])==True:  #看看 （变量名）
+                s1=fenge(s)[1]
+                if s1[0]=='“' and s1[len(s1)-1]=='”':
+                    print(s1.strip('“”'))
+                elif an.__contains__(fenge(s)[1])==True:  #看看 （变量名）
                     if an[fenge(s)[1]]>=0:
                         print(shuzitohan(an[fenge(s)[1]]))
                     else:
@@ -127,10 +130,20 @@ def main():
                     if pand(fenge(m)[2])=='True':
                         y=hantoshuzi(fenge(m)[2])
                     else:
-                        print('(未能判断该数字!)')
+                        print('("%s",未能判断该数字!)' %fenge(m)[2])
                     if bijiao(fenge(m)[1],x,y)==1:
                         if fenge(n)[0]=='看看':
-                            str=fenge(n)[1].strip('“”')
+                            s1=fenge(n)[1]
+                            if s1[0]=='“' and s1[len(s1)-1]=='”':
+                                str=s1.strip('“”')
+                            if an.__contains__(fenge(n)[1])==True: 
+                                str='(刚刚执行了“'+r+'”操作)'
+                                if an[fenge(n)[1]]>=0:
+                                    str=fenge(n)[1]+':'+shuzitohan(an[fenge(n)[1]])
+                                else:
+                                    str=fenge(n)[1]+':'+'负'+shuzitohan(an[fenge(n)[1]])
+                            elif an.__contains__(fenge(n)[1])==False:
+                                str='(没有'+fenge(n)[1]+'！)'
                         elif n=='无':
                             str='(没有任何操作)'
                         else:
@@ -138,13 +151,23 @@ def main():
                                 if pand(fenge(n)[2])=='True':
                                     t=hantoshuzi(fenge(n)[2])
                                 else:
-                                    print('(未能判断该数字!)')
+                                    print('("%s",未能判断该数字!)' %fenge(n)[2])
                                 x=an[fenge(n)[0]]
                                 an[fenge(n)[0]]=yunsuan(fenge(n)[1],x,t)
                                 str='(刚刚执行了“'+n+'”操作)'
                     else:
                         if fenge(r)[0]=='看看':
-                            str=fenge(r)[1].strip('“”')
+                            s1=fenge(r)[1]
+                            if s1[0]=='“' and s1[len(s1)-1]=='”':
+                                str=s1.strip('“”')
+                            elif an.__contains__(fenge(r)[1])==True: 
+                                str='(刚刚执行了“'+r+'”操作)'
+                                if an[fenge(r)[1]]>=0:
+                                    str=fenge(r)[1]+':'+shuzitohan(an[fenge(r)[1]])
+                                else:
+                                    str=fenge(r)[1]+':'+'负'+shuzitohan(an[fenge(r)[1]])
+                            elif an.__contains__(fenge(r)[1])==False:
+                                str='(没有'+fenge(r)[1]+'！)'
                         elif r=='无':
                             str='(没有任何操作)'
                         else:
@@ -152,7 +175,7 @@ def main():
                                 if pand(fenge(r)[2])=='True':
                                     t=hantoshuzi(fenge(r)[2])
                                 else:
-                                    print('(未能判断该数字!)')
+                                    print('("%s",未能判断该数字!)' %fenge(r)[2])
                                 x=an[fenge(r)[0]]
                                 an[fenge(r)[0]]=yunsuan(fenge(r)[1],x,t)
                                 str='(刚刚执行了“'+r+'”操作)'
