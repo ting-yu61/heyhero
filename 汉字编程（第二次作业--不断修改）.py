@@ -35,24 +35,24 @@ def hantoshuzi(x):  #汉字转为数字
     return a  
 def shuzitohan(x):  #数字转为汉字
     if x>100 or x<-100:
-        str='("'+x+'",未能判断该数字!)'
+        s='("'+str(x)+'",未能判断该数字!)'
     elif x<0 and x>=-100:
         x*=(-1)
     elif x<=10:           #例：1 —> 一
-        str=tochinese[x]
+        s=tochinese[x]
     elif x==100:
-        str='一百'
+        s='一百'
     elif x>10 & x<100:
         a=x//10
         b=x%10
         if a==1:        #例：12 —> 十二
-            str='十'+tochinese[b]
+            s='十'+tochinese[b]
         elif a>1 & a<=9:    
             if b!=0:
-                str=tochinese[a]+'十'+tochinese[b]   #例：62 —> 六十二
+                s=tochinese[a]+'十'+tochinese[b]   #例：62 —> 六十二
             else:
-                str=tochinese[a]+'十'                #例：60 —> 六十
-    return str
+                s=tochinese[a]+'十'                #例：60 —> 六十
+    return s
 def yunsuan(s,x,y):    #判断运算
     if s=='增加':
         x+=y
