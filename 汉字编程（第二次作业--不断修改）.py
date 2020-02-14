@@ -114,6 +114,12 @@ def yunsuan(s,x,y):
         if y!=0:
             x=x//y
     return x
+#判断比较
+def bijiao(s,x,y):    
+    z=0
+    if (s=='大于' and x>y) or (s=='小于' and x<y) or (s=='等于' and x==y) or (s=='不等于' and x!=y) or (s=='大于等于' and x>=y) or (s=='小于等于' and x<=y):
+        z=1
+    return z
 #分割语句
 def fenge(s):
     yuju=s.split(' ')
