@@ -2,7 +2,6 @@
 # coding: utf-8
 
 # In[9]:
-
 import re
 tonum= {'零': 0, '一':1, '二':2, '三':3, '四':4, '五':5, '六':6, '七':7, '八':8, '九':9, '十':10} 
 tochinese= {0:'零', 1:'一', 2:'二',3:'三', 4:'四', 5:'五', 6:'六', 7:'七', 8:'八', 9:'九', 10:'十'}
@@ -152,7 +151,7 @@ def main():
                         print('("%s",未能判断该数字!)' %fenge(s)[2])
                     an[fenge(s)[0]]=yunsuan(ss,x,y)
                 else:
-                    print('(没有%s！)' %fenge(s)[0])
+                    print('(没有"%s"！)' %fenge(s)[0])
             elif fenge(s)[0]=='看看' and len(fenge(s))==2:
                 if fenge(s)[1]=='':
                     print('(语句输入格式错误！)')
@@ -163,7 +162,7 @@ def main():
                     elif an.__contains__(s1)==True:  #看看 （变量名）
                             print(shuzitohan(an[s1]))
                     elif an.__contains__(s1)==False:
-                            print('(没有%s！)' %s1)
+                            print('(没有"%s"！)' %s1)
             elif fenge(s)[0]=='如果':   #如果 （判断语句） 则 （操作语句1） 否则 （操作语句2）
                 if len(fenge(s))>=8:
                     ts=re.match('如果 (.*?) 则 (.*?) 否则 (.*)',s,re.S)
@@ -187,7 +186,7 @@ def main():
                                     elif an.__contains__(s1)==True: 
                                         str=shuzitohan(an[s1])
                                     elif an.__contains__(s1)==False:
-                                        str='(没有'+s1+'！)'
+                                        str='(没有"'+s1+'"！)'
                             elif n=='无':
                                 str='(没有任何操作)'
                             else:
@@ -199,6 +198,8 @@ def main():
                                     x=an[fenge(n)[0]]
                                     an[fenge(n)[0]]=yunsuan(fenge(n)[1],x,t)
                                     str='(刚刚执行了“'+n+'”操作)'
+                                else:
+                                    str='(没有"'+fenge(n)[0]+'"！)'
                         else:
                             if fenge(r)[0]=='看看'  and len(fenge(r))==2:
                                 if fenge(r)[1]=='':
@@ -210,7 +211,7 @@ def main():
                                     elif an.__contains__(s1)==True: 
                                         str=shuzitohan(an[s1])
                                     elif an.__contains__(s1)==False:
-                                        str='(没有'+s1+'！)'
+                                        str='(没有"'+s1+'"！)'
                             elif r=='无':
                                 str='(没有任何操作)'
                             else:
@@ -222,8 +223,10 @@ def main():
                                     x=an[fenge(r)[0]]
                                     an[fenge(r)[0]]=yunsuan(fenge(r)[1],x,t)
                                     str='(刚刚执行了“'+r+'”操作)'
+                                else:
+                                    str='(没有"'+fenge(r)[0]+'""！)'
                     elif an.__contains__(fenge(m)[0])==False:
-                        str='(没有'+fenge(m)[0]+'！)'
+                        str='(没有"'+fenge(m)[0]+'"！)'
                 else:
                     str='(语句输入格式错误！)'
                 print(str)
